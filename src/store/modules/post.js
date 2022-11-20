@@ -10,14 +10,25 @@ export default {
     mutations: {
         updatePosts(state, posts) {
             state.posts = posts;
-        }
+        },
+        createPost(state, newPost) {
+            state.posts.unshift(newPost);
+        },
     },
     state: {
         posts: [],
     },
     getters: {
-        allPosts(state) {
-            return state.posts;
+        validPosts(state) {
+            return state.posts.filter(post => {
+                return post.title && post.body;
+            });
+        },
+        allPosts({ posts }) {
+            return posts;
+        },
+        postsCount(state, { validPosts }) {
+            return validPosts.length;
         },
     },
 }
